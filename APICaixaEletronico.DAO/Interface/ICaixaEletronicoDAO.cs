@@ -17,6 +17,8 @@ namespace APICaixaEletronico.DAO.Interface
 
         bool ValidarSaque(decimal valorSacar, ContaContext contaUsuario, CaixaEletronicoContext caixaEletronico);
 
+        bool ValidarDeposito(ContaContext conta, decimal valorDepositar, string[] notasDepositadas);
+
         bool ValidarInformacoes(ContaDTO conta, ContaDTO contaDestino);
 
         bool Login(long cpf, int senha);

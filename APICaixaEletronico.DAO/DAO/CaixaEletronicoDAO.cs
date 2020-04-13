@@ -41,20 +41,20 @@ namespace APICaixaEletronico.DAO.DAO
 
                     notas[i] = notasDisponives[i];
 
-                    if (i == 0) //R$100
+                    if (i == 0) //Notas de R$100
                     {
                         adicionarNota = notasNecessarias[i] - notasDisponives[i];
 
                         notasNecessarias[1] += (2 * adicionarNota);
                     }
-                    else if (i == 1) //R$50
+                    else if (i == 1) //Notas de R$50
                     {
                         adicionarNota = notasNecessarias[i] - notasDisponives[i];
 
                         notasNecessarias[2] += (2 * adicionarNota);
                         notasNecessarias[3] += (1 * adicionarNota);
                     }
-                    else if (i == 2) //R$20
+                    else if (i == 2) //Notas de R$20
                     {
                         adicionarNota = notasNecessarias[i] - notasDisponives[i];
 
@@ -71,6 +71,34 @@ namespace APICaixaEletronico.DAO.DAO
                 }
             }
             return notas;
+        }
+
+        public bool ValidarDeposito(ContaContext conta, decimal valorDepositar, string[] notasDepositadas)
+        {
+            if (conta == null)
+            {
+                throw new Exception("Conta não consta em nosso banco de dados.Aguarde alguns minutos e tente novamente.");
+            }
+            else if (valorDepositar == 0 || valorDepositar > 5000)
+            {
+                return false;
+            }
+            else if (this.ConsultarNotasDisponiveis() != null)
+            {
+                var notasDisponives = this.ConsultarNotasDisponiveis();
+
+                notasDisponives[0] += Convert.ToInt32(notasDepositadas[0]);
+                notasDisponives[1] += Convert.ToInt32(notasDepositadas[1]);
+                notasDisponives[2] += Convert.ToInt32(notasDepositadas[2]);
+                notasDisponives[3] += Convert.ToInt32(notasDepositadas[3]);
+
+                if (notasDisponives[0] > 100 || notasDisponives[1] > 100 || notasDisponives[2] > 100
+                        || notasDisponives[3] > 100)
+                {
+                    throw new Exception("valor para depósito excede quantidade de notas máximas permitidas no caixa.");
+                }
+            }
+            return true;
         }
 
         public int[] RetornarNotasNecessarias(decimal ValorSacar)
@@ -125,9 +153,9 @@ namespace APICaixaEletronico.DAO.DAO
 
         public bool ValidarInformacoes(ContaDTO conta, ContaDTO contaDestino)
         {
-            var contaUsario = _commonDbContext.Contas.Where(x => x.Banco == conta.BancoContaCli && x.Agencia == conta.AgenciaContaCli && x.NumeroContaCli == conta.NumeroContaCli).FirstOrDefault();
+            var contaUsario = _commonDbContext.Contas.Where(x => x.NumeroContaCli == conta.NumeroContaCli).FirstOrDefault();
 
-            var contaDestinataria = _commonDbContext.Contas.Where(x => x.Banco == contaDestino.BancoContaCli && x.Agencia == contaDestino.AgenciaContaCli && x.NumeroContaCli == contaDestino.NumeroContaCli).FirstOrDefault();
+            var contaDestinataria = _commonDbContext.Contas.Where(x => x.NumeroContaCli == contaDestino.NumeroContaCli).FirstOrDefault();
 
             if (contaUsario == null || contaDestinataria == null)
             {
@@ -155,8 +183,6 @@ namespace APICaixaEletronico.DAO.DAO
             {
                 var contaUsario = _commonDbContext.Contas.Where(x => x.CpfCliente == cpf && x.SenhaConta == senha).FirstOrDefault();
 
-                conta.AgenciaContaCli = contaUsario.Agencia;
-                conta.BancoContaCli = contaUsario.Banco;
                 conta.CpfCli = contaUsario.CpfCliente;
                 conta.NumeroContaCli = contaUsario.NumeroContaCli;
                 conta.SaldoConta = contaUsario.SaldoConta;

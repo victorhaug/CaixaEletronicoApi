@@ -1,15 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
-VisualStudioVersion = 15.0.28307.902
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29920.165
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APICaixaEletronico", "APICaixaEletronico\APICaixaEletronico.csproj", "{92D465C0-0C00-41BB-8218-02AB487E9E27}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APICaixaEletronico.DAO", "APICaixaEletronico.DAO\APICaixaEletronico.DAO.csproj", "{A1E8423A-3D22-49F0-B66D-1DC2A9D9B3C0}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APICaixaEletronico.DAO", "APICaixaEletronico.DAO\APICaixaEletronico.DAO.csproj", "{A1E8423A-3D22-49F0-B66D-1DC2A9D9B3C0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APICaixaEletronico.DTO", "APICaixaEletronico.DTO\APICaixaEletronico.DTO.csproj", "{BCECAFCA-1E94-4B13-A2C8-AB4A7877F770}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APICaixaEletronico.DTO", "APICaixaEletronico.DTO\APICaixaEletronico.DTO.csproj", "{BCECAFCA-1E94-4B13-A2C8-AB4A7877F770}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APICaixaEletronico.Service", "APICaixaEletronico.Service\APICaixaEletronico.Service.csproj", "{57F4F241-5B6C-4529-912C-50EB45BADECD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APICaixaEletronico.Service", "APICaixaEletronico.Service\APICaixaEletronico.Service.csproj", "{57F4F241-5B6C-4529-912C-50EB45BADECD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APICaixaEletronico.Test", "APICaixaEletronico.Test\APICaixaEletronico.Test.csproj", "{6CFA0BDB-57F7-4607-A647-033E313544A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{57F4F241-5B6C-4529-912C-50EB45BADECD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{57F4F241-5B6C-4529-912C-50EB45BADECD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{57F4F241-5B6C-4529-912C-50EB45BADECD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6CFA0BDB-57F7-4607-A647-033E313544A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6CFA0BDB-57F7-4607-A647-033E313544A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6CFA0BDB-57F7-4607-A647-033E313544A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6CFA0BDB-57F7-4607-A647-033E313544A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

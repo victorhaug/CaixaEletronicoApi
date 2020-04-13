@@ -10,39 +10,57 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
+
+
 namespace APICaixaEletronico
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        public Startup(IConfiguration configuration, IWebHostEnvironment env)
         {
+            var builder = new ConfigurationBuilder()
+
+            .SetBasePath(env.ContentRootPath)
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
             Configuration = configuration;
         }
 
         public IConfiguration Configuration { get; }
 
-        // This method gets called by the runtime. Use this method to add services to the container.
+        // Este método é chamado pelo tempo de execução. Use este método para adicionar serviços ao contêiner.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("AllowSpecificOrigin",
+
+                builder => builder
+                .AllowAnyHeader()
+                .AllowAnyMethod()
+                .AllowAnyOrigin()
+                );
+
+
+            });
             services.AddDbContext<CommonDbContext>(options =>
             {
                 options.UseSqlServer(Configuration.GetConnectionString("Defaultconnection"));
             });
 
 
+            services.AddTransient<IOperacoesCaixaEletronicoDAO, OperacoesCaixaEletronicoDAO>();
+            services.AddTransient<IOperacoesCaixaEletronicoService, OperacoesCaixaEletronicoService>();
             services.AddTransient<ICaixaEletronicoDAO, CaixaEletronicoDAO>();
             services.AddTransient<ICaixaEletronicoService, CaixaEletronicoService>();
+            services.AddControllers().AddNewtonsoftJson();
 
             services.AddControllers();
 
 
+
         }
-        
-        
 
-           
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        // Este método é chamado pelo tempo de execução. Use este método para configurar o pipeline de solicitação HTTP.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
@@ -53,6 +71,7 @@ namespace APICaixaEletronico
             app.UseHttpsRedirection();
 
             app.UseRouting();
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseAuthorization();
 
@@ -62,6 +81,6 @@ namespace APICaixaEletronico
             });
         }
 
-        
+
     }
 }
